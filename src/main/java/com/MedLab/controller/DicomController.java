@@ -63,7 +63,7 @@ public class DicomController {
         return ResponseEntity.ok(response);
     }
 
-    //파일 다운로드 엔드포인트.
+    //파일 다운로드 엔드포인트
     @GetMapping("/download/{id}")
     public ResponseEntity<Resource> downloadFile(@PathVariable int id) {
         Path path = Paths.get("/storage/png/test_result.png");
