@@ -12,7 +12,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/dicom")
 public class DicomController {
-//
+
 
     //파일 업로드(POST)
     @PostMapping("/upload")
@@ -44,6 +44,7 @@ public class DicomController {
         return ResponseEntity.ok("History List Placeholder");
     }
 
+    //상세 조회(GET)
     @GetMapping("/history/{id}")
     public ResponseEntity<?> getDetail(@PathVariable int id) {
         HashMap<String, Object> response = new HashMap<>();
