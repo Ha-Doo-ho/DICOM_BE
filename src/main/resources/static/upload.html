@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!---->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>DICOM to PNG Converter</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Roboto:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="history.css">
+
+</head>
+<body>
+
+<div class="container">
+    <h1>DICOM to PNG Converter</h1>
+
+    <div class="upload-box" id="drop-area">
+        <input type="file" id="file-input" accept=".dicom, .zip" hidden>
+
+        <div class="icon-area">
+            <svg viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+        </div>
+
+        <p class="main-text">
+            <button id="browse-btn">파일선택</button>
+            <span>또는 파일을 여기로 드래그 하시오</span>
+        </p>
+        <p class="sub-text">.dicom, .zip지원</p>
+
+        <div class="file-info-container" style="margin-top: 10px;">
+            <span id="file-name" class="file-name-display"></span>
+            <button id="delete-btn" style="display: none; background: none; border: none; color: #81b1ff; font-weight: bold; cursor: pointer; margin-left: 8px;">✕</button>
+        </div>
+    </div>
+    <div class="button-group">
+        <button id="convert-btn" class="convert-btn" disabled>변환</button>
+        <button id="history-btn" class="history-btn" onclick="location.href='history2.html'">내역 조회</button>
+    </div>
+</div>
+
+<div id="loading-overlay" class="hidden">
+    <h2>변환 중...</h2>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <p id="progress-text">0%</p>
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>

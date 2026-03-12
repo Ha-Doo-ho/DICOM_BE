@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // 모든 경로에 대해
                 //.allowedOriginPatterns("*") //  모든 도메인 (출처) 허용
                 //.allowedOrigins("http://localhost:3000") // 프론트엔드 서버 주소 (React 디폴트값)
-                .allowedOrigins("http://127.0.0.1:5500", "http://localhost:5500") // 실제 프론트엔드 주소를 명시)
+                .allowedOrigins("http://localhost:8080","http://127.0.0.1:5500", "http://localhost:5500","http://localhost:63343") // 실제 프론트엔드 주소를 명시)
                 .allowedMethods("GET","POST","PUT","DELETE","OPTIONS") // 허용할 HTTP 메서드
                 .allowedHeaders("*") // 모든 헤더 허용
                 .allowCredentials(true); // 쿠키나 인증정보 허용

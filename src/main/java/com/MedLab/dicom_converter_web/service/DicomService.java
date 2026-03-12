@@ -154,21 +154,25 @@ public class DicomService {
             BufferedImage bufferedImage = reader.read(0);
 
             if (!ImageIO.write(bufferedImage,"png",new File(pngPath))) {
-                throw new RuntimeException("PNG 쓰기 실패");
+                throw new RuntimeException("PNG 쓰기 실패 ");
             }
             reader.dispose();
         }
     }
-
     private void runPythonConversion(String input, String output) throws Exception {
 
+        // 1. 동적 절대 경로 주입 (경로 불일치 해결)
         String projectRoot = System.getProperty("user.dir");
+        // 메모리 상에 특정 파일이나 폴더의 **'주소(경로)를 가리키는 객체'**를 만드는 과정
+        // 새로운 파일 / 폴더를 만드는게 아님!!!
         File scriptFile = new File(projectRoot, pythonScriptPath);
 
         if(!scriptFile.exists()) {
             throw new RuntimeException("파이썬 script 파일을 찾을 수 없음. 확인된 경로" + scriptFile.getAbsolutePath());
         }
 
+        //ProcessBuilder는 단순히 실행만 하는 게 아니라, 파이썬이 일을 잘하고 있는지 **종료 코드(Exit Code)**를 확인하거나
+        // 파이썬이 뱉는 에러 메시지를 자바가 실시간으로 읽어올 수 있게 해줍니다.
         ProcessBuilder pb = new ProcessBuilder(
                 pythonExe,
                 scriptFile.getAbsolutePath(),

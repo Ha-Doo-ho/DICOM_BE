@@ -1,0 +1,68 @@
+body {
+    height: auto !important;        /* 고정 높이 해제 (스크롤 가능하게) */
+    min-height: 100vh;              /* 최소 높이 유지 */
+    align-items: flex-start !important; /* 내용이 길면 위에서부터 시작 */
+    padding-top: 50px;              /* 상단 여백 확보 */
+    padding-bottom: 50px;           /* 하단 여백 확보 */
+    overflow-y: auto;               /* 세로 스크롤 허용 */
+}
+
+.history-box {
+    background-color: #f2f2f2;
+    border: 3px dashed #bbb;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px auto;
+    width: 95%;
+    max-width: 700px;
+    /* 내용이 넘치면 박스 안에서도 스크롤 가능하게 처리 (선택사항) */
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th, td {
+    padding: 16px 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+th {
+    background-color: #ffffff;
+    font-weight: 700;
+    border-top: 1px solid #eee;
+}
+
+/* 상태 뱃지 스타일 */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.status-success { background: #e7f5ff; color: #1c7ed6; }
+.status-fail { background: #fff5f5; color: #fa5252; }
+
+.view-link { color: #4285f4; font-weight: bold; text-decoration: none; }
+.view-link:hover { text-decoration: underline; }
+
+.bottom-actions { margin-top: 20px; text-align: center; }
+
+.back-btn {
+    padding: 12px 30px;
+    background-color: #E5E7EB;
+    color: #4B5563;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+.back-btn:hover {
+    background-color: #D1D5DB;
+}

@@ -46,12 +46,12 @@ dependencies {
 
     // JPEG 2000 압축 방식을 지원하기 위한 코덱
     implementation 'com.github.jai-imageio:jai-imageio-jpeg2000:1.4.0'
-    implementation 'org.dcm4che:dcm4che-imageio-opencv:5.31.0'
+    //implementation 'org.dcm4che:dcm4che-imageio-opencv:5.31.0'
     // PlanarImage 클래스를 포함하고 있는 Weasis OpenCV 핵심 라이브러리
-    implementation 'org.weasis.opencv:weasis-opencv-core:4.4.0'
+    //implementation 'org.weasis.opencv:weasis-opencv-core:4.4.0'
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-    implementation 'org.dcm4che:dcm4che-imageio-opencv:5.31.0'
+    //implementation 'org.dcm4che:dcm4che-imageio-opencv:5.31.0'
     implementation 'org.openpnp:opencv:4.5.1-2'
 
 
