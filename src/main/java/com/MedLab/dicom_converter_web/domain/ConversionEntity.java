@@ -21,6 +21,6 @@ public class ConversionEntity {
     private LocalDateTime conversionDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dicom_id") // 외래키 설정 외래키는 dicom_id이다.
+    @JoinColumn(name = "dicom_id") // 외래키 설정. 외래키 컬럼명은 dicom_id이다.
     private DicomEntity dicom;
 }

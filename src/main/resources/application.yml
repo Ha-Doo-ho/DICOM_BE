@@ -1,8 +1,10 @@
 dicom:
   python:
 
-    executable: "C:/Users/user/AppData/Local/Programs/Python/Python313/python.exe"
-    script-path: "../../scripts/convert.py"
+    executable: "python3"
+
+    script-path: "scripts/convert.py"
 
   storage:
+
     location: "storage"

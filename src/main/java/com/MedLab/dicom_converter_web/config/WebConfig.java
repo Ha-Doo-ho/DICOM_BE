@@ -29,13 +29,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // E:/Medical-Dicom-Project/storage/ 경로를 /images/** 주소로 매핑
-        String projectRoot = System.getProperty("user.dir");
-        Path storagePath = Paths.get(projectRoot, storageLocation).toAbsolutePath();
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("file:" + storageLocation + "/");
 
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:///" + storagePath.toString() +"/");
+                .addResourceLocations("file:" + storageLocation +"/");
     }
+
+
 }
 
 //주의 : allowedOrigins("*")와  allowCredentials(true)는 동시에 쓸 수 없음. 반드시 allowedOriginPatterns("*")를 사용할 것.

@@ -3,6 +3,7 @@ import com.MedLab.dicom_converter_web.domain.DicomEntity;
 import com.MedLab.dicom_converter_web.repository.DicomRepository;
 import com.MedLab.dicom_converter_web.service.DicomService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.connector.Response;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -57,7 +58,6 @@ public class DicomController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("FAILED" + e.getMessage());
         }
-
     }
 
     //전체 이력 조회 (GET)

@@ -1,9 +1,10 @@
 # 1. 자바 21 환경 (가벼운 리눅스 기반)
-FROM openjdk:21-slim
+FROM eclipse-temurin:21-jdk-jammy
 
 # 2. 파이썬 3 및 라이브러리 설치 (하이브리드 엔진용)
-RUN apt-get update && apt-get install -y python3 python3-pip
-RUN pip3 install pydicom Pillow numpy --break-system-packages
+RUN apt-get update && apt-get install -y python3 python3-pip python3-gdcm
+# pylibjpeg 관련 라이브러리들을 추가했습니다!
+RUN pip3 install pydicom Pillow numpy pylibjpeg pylibjpeg-libjpeg pylibjpeg-openjpeg
 
 # 3. 작업 폴더 설정
 WORKDIR /app
