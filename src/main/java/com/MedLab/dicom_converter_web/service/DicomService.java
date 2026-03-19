@@ -59,7 +59,7 @@ public class DicomService {
 
         file.transferTo(savePath.toFile());
 
-        System.out.println("실제 저장 위치: " + savePath.toString());
+        log.info("실제 저장 위치: {}", savePath.toString());
 
         // 초기값 설정 (DICOM이 아닐 경우 대비)
         String pName = "Unknown", pId ="Unknown", sDate = "", mod = "", sUid = "";
@@ -73,7 +73,7 @@ public class DicomService {
             mod = attributes.getString(Tag.Modality, "");
             sUid = attributes.getString(Tag.StudyInstanceUID, "");
         } catch (Exception e) {
-            System.out.println("DICOM 파일이 아니거나 정보를 읽을 수 없음" + e.getMessage());
+            log.warn("DICOM 파일이 아니거나 정보를 읽을 수 없음 : {},"  e.getMessage());
         }
 
 
