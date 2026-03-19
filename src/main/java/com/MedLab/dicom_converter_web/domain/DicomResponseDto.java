@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class DicomResponseDto {
     private int id;
     private String fileName;
