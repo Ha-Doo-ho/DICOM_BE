@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DicomService {
@@ -41,8 +42,7 @@ public class DicomService {
    @Value("${dicom.storage.location}")
    private String uploadDir;
 
-    // 파일을 저장하고 DB에 기록하는 핵심 로직
-    //리포지토리에 정의한 Native Query를 호출하는 방식
+    // 파일을 저장하고 DB에 기록
     @Transactional // @Transactional이 붙은 메서드 내 모든 작업은 성공 시 commit, 예외 발생 시 rollback 처리되어, 데이터가 일부만 반영되는 것을 방지합니다.
     public Long uploadAndSaveDicom(MultipartFile file) throws IOException {
         String projectRoot = System.getProperty("user.dir");
@@ -57,20 +57,14 @@ public class DicomService {
         String savedName = String.valueOf(UUID.randomUUID()) + "_" + originalFilename;
         Path savePath = storageFolder.resolve(savedName); // + 또는 , 가 있는데 +는 둘을 붙여버리고 , 는 OS에 맞는 구분자를 넣어준다.
 
-        // 2. 물리적 폴더에 파일 저장
-//        File targetFile = new File(uploadDir);
-//        if (!targetFile.exists()) { //폴더에 없으면 생성.
-//            targetFile.mkdirs(); //mkdirs 폴더 생성인데, 상위까지 디렉토리까지 자동으로 만듦. 훨씬 안전 mkdir은 해당 디렉토리만 만들고 상위경로가 맞지 않으면 실패함.
-//        }
-        // System.out.println("실제 저장 경로 : " + savePath.toAbsolutePath());
         file.transferTo(savePath.toFile());
 
         System.out.println("실제 저장 위치: " + savePath.toString());
 
-        // 3. 초기값 설정 (DICOM이 아닐 경우 대비)
+        // 초기값 설정 (DICOM이 아닐 경우 대비)
         String pName = "Unknown", pId ="Unknown", sDate = "", mod = "", sUid = "";
 
-        // 4. DICOM 데이터 추출
+        // DICOM 데이터 추출
         try (DicomInputStream dis = new DicomInputStream(savePath.toFile())) {
             Attributes attributes = dis.readDataset(-1,-1);
             pName = attributes.getString(Tag.PatientName, "Unknown");
@@ -85,7 +79,7 @@ public class DicomService {
 
 
 
-        //4. DicomEntity 객체 생성 및 save() 호출
+        //DicomEntity 객체 생성 및 save() 호출
         DicomEntity dicomEntity = new DicomEntity();
         dicomEntity.setFilePath(savePath.toString());
 
@@ -115,15 +109,15 @@ public class DicomService {
 
         try{
             tryJavaConversion(dicomPath, pngPath);
-            System.out.println("자바 엔진 변환 성공: " + id);
+            log.info("자바 엔진 변환 성공: {}", id);
         } catch (Throwable e) {
-            System.err.println("자바 엔진 실패. 파이썬 엔진을 가동합니다.");
+            log.warn("자바 엔진 실패({}). 파이썬 엔진을 가동합니다.", e.getMessage());
 
             try {
                 runPythonConversion(dicomPath, pngPath);
-                System.out.println("파이썬 엔진 변환 성공: " + id);
+                log.info("파이썬 엔진 변환 성공: ID {}", id);
             } catch (Exception pyEx) {
-                System.err.println("최종 변환 실패" + pyEx.getMessage());
+                log.error("최종 변환 실패: {}", pyEx.getMessage());
                 entity.setConversionStatus("FAILED");
                 dicomRepository.save(entity);
                 return;
@@ -161,7 +155,7 @@ public class DicomService {
     }
     private void runPythonConversion(String input, String output) throws Exception {
 
-        // 1. 동적 절대 경로 주입 (경로 불일치 해결)
+        // 동적 절대 경로 주입 (경로 불일치 해결)
         String projectRoot = System.getProperty("user.dir");
         // 메모리 상에 특정 파일이나 폴더의 **'주소(경로)를 가리키는 객체'**를 만드는 과정
         // 새로운 파일 / 폴더를 만드는게 아님!!!
@@ -185,7 +179,7 @@ public class DicomService {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(),"MS949"))){
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println("[Python Log] " + line);
+                log.info("[Python Log] {}", line); 
             }
         }
 
